@@ -1,0 +1,24 @@
+function [trainSet, testSet, trainCode, testCode] = generateMDSHMatrices(dataFile)
+
+disp('load data');
+ndim = 1296;
+[list, label] = extractFeatures(dataFile, ndim);
+[row col] = size(TotalSet);
+index = round(row * 9/10);
+Xtraining = list(1:index,:); % training set = 9/10 total items
+Xtest = list(index + 1:row,:); % test set = 1/10 total items
+
+% MDSH approach
+Sigma=5;
+SHparamNew.nbits = 32; % number of bits to code each sample
+SHparamNew.sigma=Sigma; % Sigma for the affinity. Different codes for different sigmas!
+
+SHparamNew = trainMDSH(Xtraining, SHparamNew);
+[B1,U1] = compressMDSH(Xtraining, SHparamNew);
+[B2,U2] = compressMDSH(Xtest, SHparamNew);
+
+
+trainSet = 
+Utraining_mdsh = sign(U1);
+Utest_mdsh = sign(U2);
+end
