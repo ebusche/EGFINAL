@@ -1,0 +1,12 @@
+function [ precision ] = test( dataFile)
+
+[trainSet, testSet, trainCode, testCode] = generateCBMFMatrices(dataFile);
+[dd,W]=averageDistance(trainSet);
+dd
+threshold = dd; %you can try different values but this one seems reasonable
+
+trainCode
+precision = evaluationAffinityEfficient2(trainSet, testSet, trainCode, testCode, [], threshold);
+
+end
+

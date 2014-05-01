@@ -1,7 +1,7 @@
 function [trainSet, testSet, trainCode, testCode] = generateCBMFMatrices(dataFile)
     ndim = 1296; % number of features in an item
     [list, label] = extractFeatures(dataFile, ndim);
-    [row col] = size(list); %is this right?
+    [row col] = size(TotalSet);
     index = round(row * 9/10);
     trainSet = list(1:index,:); % training set = 9/10 total items
     testSet = list(index + 1:row,:); % test set = 1/10 total items
@@ -21,6 +21,9 @@ function [trainSet, testSet, trainCode, testCode] = generateCBMFMatrices(dataFil
     testCode = zeros(testItems, SHparamNew.nbits);
     for x = 1:testItems
         newItem = testSet(x,:);
+        classifiers
+        newItem
+        SHparamNew.nbits
         newCode = LRGenCode(classifiers, newItem, SHparamNew.nbits);
         testCode(x,:) = newCode;
     end

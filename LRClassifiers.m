@@ -11,3 +11,4 @@ classifiers = cell(1,dimensions);
 for i=1:dimensions
    classifiers{i} = glmfit(TrainSet, TrainResult(:,i), 'binomial');
 end
+end
