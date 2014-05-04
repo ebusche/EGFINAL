@@ -1,4 +1,4 @@
-function [score, recall,mean_precision,true_nn,ham_nn] = evaluationAffinityEfficient2(Xtraining, Xtest, Utraining, Utest, SHparam, T, fig, varargin)
+function [mean_precision] = evaluationAffinityEfficient2(Xtraining, Xtest, Utraining, Utest, SHparam, T)
 
 %
 % Input:
@@ -97,14 +97,15 @@ for nc = 1:length(chunks)-1
     What = What(:);
     for n = length(B):-1:1
         j = (What>=B(n));
-        retrieved_pairs(n) = retrieved_pairs(n) + sum(j);
+        retrieved_pairs(n) = retrieved_pairs(n) + sum(j); % ca 2 deu bang 0
         retrieved_good_pairs(n) = retrieved_good_pairs(n) + sum(Wtrue(j));
         %retrieved_good_pairs(n) = retrieved_good_pairs(n) + Wtrue*j';
     end
 end
 score = retrieved_good_pairs./retrieved_pairs;
+recall = 0;
+if (
 recall= retrieved_good_pairs./total_good_pairs;
-
 %%% now compute mean precision
 
 % sort order of points...
@@ -121,47 +122,4 @@ else
   mean_precision = trapz(recall,score);
 end
 
-% The standard measures for IR are recall and precision. Assuming that:
-%
-%    * RET is the set of all items the system has retrieved for a specific inquiry;
-%    * REL is the set of relevant items for a specific inquiry;
-%    * RETREL is the set of the retrieved relevant items
-%
-% then precision and recall measures are obtained as follows:
-%
-%    precision = RETREL / RET
-%    recall = RETREL / REL
-
-threeplots=0;
-if nargout == 0 || nargin > 3
-    if isempty(fig);
-        fig = figure;
-    end
-    figure(fig)
-    if (threeplots)
-        subplot(311)
-        plot(0:length(score)-1, score, varargin{:})
-        hold on
-        xlabel('hamming radius')
-        ylabel('percent correct (precision)')
-        title('percentage of good neighbors inside the hamm ball')
-        subplot(312)
-        % plot(recall, score, varargin{:})
-        plot(0:length(score)-1, recall, varargin{:})
-        hold on
-        axis([0 1 0 1])
-        %xlabel('recall')
-        %ylabel('percent correct (precision)')
-        xlabel('hamming radius')
-        ylabel('recall')
-        drawnow
-        subplot(313);
-    end
-    plot(recall, score, varargin{:})
-    
-    hold on
-    axis([0 1.01 0 1.01])
-    xlabel('recall')
-    ylabel('percent correct (precision)')
-    drawnow
 end

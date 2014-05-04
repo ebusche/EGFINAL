@@ -1,12 +1,11 @@
 
-    ndim=128; %number of input bits
-    Ntrain=10000; %number of training images
-    Ntest=300; %number of testing images
+    ndim=625; %number of input bits (625, 1296, 4096, 10000)
+    Ntrain=50000; %number of training images
+    Ntest=10000; %number of testing images
     dd=(1:ndim).^(2);
     aspectMat=diag(1./dd); %can be deleted
-    Xtraining=randn(Ntrain,ndim)*aspectMat; %replace with real training matrix
-    Xtest=randn(Ntest,ndim)*aspectMat; %replace with real testing matrix
-    loopbits=[8]; %number of output bits
+    [Xtraining, Xtest] = getCIFAR10(ndim);
+    loopbits=[16 32]; %number of output bits
     
     imgTrain = zeros(32,32,3,Ntrain,'uint8');
     imgTest = zeros(32,32,3,Ntest,'uint8');

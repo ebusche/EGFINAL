@@ -98,12 +98,18 @@ for nc = 1:length(chunks)-1
     for n = length(B):-1:1
         j = (What>=B(n));
         retrieved_pairs(n) = retrieved_pairs(n) + sum(j);
+        if (retrieved_pairs(n) == 0) % fixed NaN error (division by 0)
+            retrieved_pairs(n) = 1;
+        end
         retrieved_good_pairs(n) = retrieved_good_pairs(n) + sum(Wtrue(j));
         %retrieved_good_pairs(n) = retrieved_good_pairs(n) + Wtrue*j';
     end
 end
 score = retrieved_good_pairs./retrieved_pairs;
-recall= retrieved_good_pairs./total_good_pairs;
+recall = 0;
+if (total_good_pairs ~= 0)
+    recall= retrieved_good_pairs./total_good_pairs;
+end
 
 %%% now compute mean precision
 

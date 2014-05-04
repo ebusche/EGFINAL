@@ -209,7 +209,7 @@ for nb = loopbits
         
         if (runCBMF)
             [PCBMF,recallCBMF,apCBMF(bit_idx,ii),trueCBMF,hamCBMF]=evaluationAffinityEfficient(Xtraining, Xtest, Utraining_CBMF, Utest_CBMF, [],T,hh,'yo-','linewidth',2.0);
-a = evaluationAffinityEfficient2(Xtraining, Xtest, Utraining_CBMF, Utest_CBMF, [],T)
+            % a = evaluationAffinityEfficient2(Xtraining, Xtest, Utraining_CBMF, Utest_CBMF, [],T)
             ll{end+1}='CBMF';
             apCBMF(bit_idx,ii)
             %%% true neapCBMF(bit_idx,ii)arest neighbors 
