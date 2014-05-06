@@ -106,7 +106,7 @@ for nc = 1:length(chunks)-1
     end
 end
 score = retrieved_good_pairs./retrieved_pairs;
-recall = 0;
+recall = zeros(1, length(retrieved_good_pairs));
 if (total_good_pairs ~= 0)
     recall= retrieved_good_pairs./total_good_pairs;
 end

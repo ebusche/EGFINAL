@@ -122,8 +122,12 @@ for nb = loopbits
             newCode = LRGenCode(classifiers, newItem, SHparamN.nbits);
             Utest_CBMF(x,:) = newCode;
         end
-        
-        Whamm_CBMF = Utest_CBMF(m,:)*Utraining_CBMF';
+        W1 = Utest_CBMF(m,:);
+        W1(W1==0) = -1;
+        W2 = Utraining_CBMF';
+        W2(W2==0) = -1;
+        % Whamm_CBMF = Utest_CBMF(m,:)*Utraining_CBMF';
+        Whamm_CBMF = W1 * W2;
     end
     
     
@@ -181,9 +185,8 @@ for nb = loopbits
             [PMD,recallMD,apMDSH(bit_idx,ii),trueMD,hamMD]=evaluationAffinityEfficient(Xtraining, Xtest, Utraining_mdsh, Utest_mdsh, SHparamNew,T,hh,'bo-','linewidth',2.0);
             ll{end+1}='MDSH';
             %%% true nearest neighbors 
-            [a] = evaluationAffinityEfficient2(Xtraining, Xtest, Utraining_mdsh, Utest_mdsh, SHparamNew, T);
-            a
-           
+            % a = evaluationAffinityEfficient2(Xtraining, Xtest, Utraining_mdsh, Utest_mdsh, SHparamNew, T)
+                       
             for jj=1:NUM_EXAMPLES, all_img{jj} = cat(4,all_img{jj},labelimg(imgTrain(:,:,:,trueMD{1}(jj,1:NUM_NEIGHBORS)),trueMD{2}(jj,1:NUM_NEIGHBORS))); end
             %%% MDSH nearest neighbors
             for jj=1:NUM_EXAMPLES, all_img{jj} = cat(4,all_img{jj},labelimg(imgTrain(:,:,:,hamMD{1}(jj,1:NUM_NEIGHBORS)),hamMD{2}(jj,1:NUM_NEIGHBORS))); end           
